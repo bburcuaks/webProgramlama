@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Profil";
+}
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display-10 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+        </div>
+</div>
+<div class="row">
+    <div class="col-4">
+
+        <div class="mb-4">
+            <div asp-validation-summary="All" class="text-danger small"></div>
+        </div>
+
+
+        <form method="post" asp-action="ProfileChangeUsername">
+            <div class="form-group">
+                <label class="form-label small">Kullancı Adı</label>
+                <div class="input-group mb-3">
+                    <input name="username" type="text" class="form-control" placeholder="John Doe" value=@ViewData["Username"] />
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <form method="post" asp-action="ProfileChangePassword">
+            <div class="form-group">
+                <label class="form-label small">Yeni Şifre</label>
+                <div class="input-group mb-3">
+                    <input name="password" type="password" class="form-control" placeholder="P@ssw0rd!" />
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit">Kaydet</button>
+                    </div>
+
+                    @if(ViewData["results"]!=null && ViewData["results"]=="PasswordChanged")
+                    {
+                        <span class="text-success small">Şifre Güncellendi.</span>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
