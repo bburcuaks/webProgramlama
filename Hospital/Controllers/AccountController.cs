@@ -128,7 +128,7 @@ namespace Hospital.Controllers
             User user = _databaseContext.Users.SingleOrDefault(x => x.Id == userid);
             ViewData["Username"] = user.Username;
         }
-
+        //aa
         [HttpPost]
         public IActionResult ProfileChangeFullname([Required][StringLength(50)]string? username)
         {
