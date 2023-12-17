@@ -7,13 +7,21 @@ namespace Hospital.Entities
     [Table("Users")]
     public class User
     {
+
+        // Constructor
+        public User()
+        {
+            Id = Guid.NewGuid(); // Rastgele bir Guid değeri atanıyor
+        }
+
         [Key]
 
         public Guid Id { get; set; }
 
+       
 
         //[StringLength(50)]
-       // string? Fullname { get; set; } = null;
+        // string? Fullname { get; set; } = null;
         [Required]
         [StringLength(30)]
         public string Username { get; set; }
