@@ -8,9 +8,9 @@ namespace Hospital.Entities
         { }
         public DbSet<User> Users { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Appointment> Doctors { get; set; }
-        public DbSet<Appointment> Departments { get; set; }
-        public DbSet<Appointment> Patients { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Patient> Patients { get; set; }
 
 
 

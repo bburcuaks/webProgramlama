@@ -1,10 +1,13 @@
 ﻿using Hospital.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Controllers
 {
+    [Authorize(Roles = "hasta ")]
     public class AppointmentController : Controller
     {
+      
         private readonly DatabaseContext _databaseContext;
         private readonly IConfiguration _configuration;
         public AppointmentController(DatabaseContext databaseContext, IConfiguration configuration)

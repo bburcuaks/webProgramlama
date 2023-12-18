@@ -7,7 +7,12 @@ namespace Hospital.Entities
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Department { get; set; }
+
+        public int? DepartmentId { get; set; } // Department'a referans oluşturmak için
+
+        [ForeignKey("DepartmentId")]
+        public Department Department { get; set; }
+     
         public List<Appointment> Appointments { get; set; }
     }
 }
