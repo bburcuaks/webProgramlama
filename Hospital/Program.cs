@@ -19,7 +19,7 @@ builder.Services
         opts.ExpireTimeSpan = TimeSpan.FromDays(7);
         opts.SlidingExpiration = false;
         opts.LoginPath = "/Account/Login";
-        opts.LoginPath = "/Account/Logout";
+        opts.LogoutPath = "/Account/Logout";
         opts.AccessDeniedPath = "/Home/AccessDenied";
     });
 var app = builder.Build();
