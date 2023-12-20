@@ -9,10 +9,8 @@ namespace Hospital.Entities
     {
 
         // Constructor
-        public User()
-        {
-            Id = Guid.NewGuid(); // Rastgele bir Guid değeri atanıyor
-        }
+      
+       
 
         [Key]
 

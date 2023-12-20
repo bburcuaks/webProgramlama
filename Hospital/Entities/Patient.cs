@@ -3,9 +3,9 @@
 namespace Hospital.Entities
 {
     [Table("Patients")]
-    public class Patient:User
+    public class Patient
     {
-
+        public Guid? Id { get; set; }
         public string IdentityNo { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

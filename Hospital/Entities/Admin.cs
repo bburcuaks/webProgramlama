@@ -1,6 +1,6 @@
 ﻿namespace Hospital.Entities
 {
-    public class Admin : User
+    public class Admin 
     {
 
         public string Name { get; set; }

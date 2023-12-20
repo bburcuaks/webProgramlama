@@ -1,6 +1,7 @@
 ﻿using Hospital.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hospital.Controllers
 {
@@ -18,11 +19,12 @@ namespace Hospital.Controllers
 
 
 
-        public IActionResult MakeAppointment()
+        [HttpGet]
+        public async Task<IActionResult> MakeAppointment()
         {
-            // Gerekirse doktorlar, hastalar, departmanlar gibi seçenekleri ViewBag veya ViewData üzerinden gönderebilirsiniz.
-            ViewBag.Doctors = _databaseContext.Doctors.ToList(); // Örnek: Veritabanından doktor listesini al
-            ViewBag.Departments = _databaseContext.Departments.ToList(); // Örnek: Veritabanından departman listesini al
+            // Gerekirse doktorlar, hastalar, departmanlar gibi seçenekleri ViewBag  üzerinden gönderebilirsiniz.
+           ViewBag.Doctors =  await _databaseContext.Doctors.ToListAsync(); // Örnek: Veritabanından doktor listesini al
+            ViewBag.Departments = await _databaseContext.Departments.ToListAsync(); // Örnek: Veritabanından departman listesini al
 
             return View();
         }
@@ -36,8 +38,8 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 // Hasta ve doktor bilgilerini al
-                var patient = _databaseContext.Patients.FirstOrDefault(p => p.Username == patientName);
-                var doctor = _databaseContext.Doctors.FirstOrDefault(d => d.    Username == doctorName);
+                var patient = _databaseContext.Patients.FirstOrDefault(p => p.Name == patientName);
+                var doctor = _databaseContext.Doctors.FirstOrDefault(d => d.Name == doctorName);
 
                 if (patient != null && doctor != null)
                 {
