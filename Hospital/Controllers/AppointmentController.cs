@@ -1,7 +1,9 @@
 ﻿using Hospital.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Hospital.Controllers
 {
@@ -67,12 +69,64 @@ namespace Hospital.Controllers
             // Model geçerli değilse, sayfayı tekrar göster
             return View();
         }
+
+
+
+
+
+
+        private IEnumerable<Department> GetDepartments()
+        {
+            var selectedDoctorNameList = _databaseContext.Doctors.ToList();
+            
+            var DepartmentsList = _databaseContext.Departments.ToList();
+
+            
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            ViewBag.UserId = userId;
+
+            
+            if (selectedDoctorNameList != null)
+            {
+                ViewBag.selectedDoctorNameList = new SelectList(selectedDoctorNameList, "Id", "name");
+            }
+            
+
+            
+            if (DepartmentsList != null)
+            {
+                ViewBag.DepartmentsList = new SelectList(DepartmentsList, "DepartmentId", "DepartmentName");
+            }
+
+            return DepartmentsList;
+        }
+
+        public IActionResult ListedDepartment()
+        {
+            ViewData["Departments"] = GetDepartments();
+
+            
+
+            return View();
+        }
+
+
+
+
+
+
+
         //Randevu lisleteme
         public IActionResult Index()
         {
             var appointments = _databaseContext.Appointments.ToList();
             return View(appointments);
         }
+
+
+
+
+
 
         // Yeni randevu oluşturma sayfası
         public IActionResult Create()

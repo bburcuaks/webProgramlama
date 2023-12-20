@@ -8,16 +8,11 @@ namespace Hospital.Entities
     public class User
     {
 
-        // Constructor
-      
-       
+
 
         [Key]
 
         public Guid Id { get; set; }
-
-       
-
         //[StringLength(50)]
         // string? Fullname { get; set; } = null;
         [Required]
