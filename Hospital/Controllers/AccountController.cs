@@ -54,6 +54,17 @@ namespace Hospital.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme);
                     ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    // Admin kontrolü ekleyerek yönlendirme yapın
+                    if (user.Username.ToLower() == "admin")
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 else

@@ -27,9 +27,9 @@ namespace Hospital.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin")]
-        [HttpPost]
-        public IActionResult AddDoctor(string name, string surname, int departmentId)
+        //[Authorize(Roles = "admin")]
+        //[HttpPost]
+        /*public async Task< IActionResult> AddDoctor(string name, string surname, Guid departmentId)
         {
 
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(surname))
@@ -39,19 +39,19 @@ namespace Hospital.Controllers
                 {
                     Name = name,
                     Surname = surname,
-                    Department = _databaseContext.Departments.FirstOrDefault(d => d.Id == departmentId),
+                    Department = _databaseContext.Departments.FirstOrDefault(d => d.DeparmentId == departmentId),
                     Appointments = new List<Appointment>() // Doktora ait randevu listesi, başlangıçta boş olabilir
                 };
 
                 // Doktoru veritabanına ekleyin
-                _databaseContext.Doctors.Add(newDoctor);
-                _databaseContext.SaveChanges();
+              await  _databaseContext.Doctors.AddAsync(newDoctor);
+              await    _databaseContext.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
 
             // Eğer gerekli bilgiler eksikse formu tekrar göster
             return View();
-        }
+        } */
     }
 }

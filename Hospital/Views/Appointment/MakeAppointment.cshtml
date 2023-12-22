@@ -29,11 +29,13 @@
                     <select id="departmentSelect" name="department" class="form-control">
                     @foreach (var department in (IEnumerable<Department>)ViewData["Departments"])
                         {
-                            <option value="@department.Id">@department.Name</option>
+                            <option value="@department.DeparmentId">@department.Name</option>
                         }                  
                         </select>
                 </div>
             </div>
+    
+
 
             <div class="form-group">
                 <label class="form-label small">Doktor Adı</label>
@@ -41,8 +43,9 @@
                     <select id="doctorSelect" name="doctorName" class="form-control"><
                   @foreach (var doctor in (IEnumerable<Doctor>)ViewData["Doctors"])
             {
-                <option value="@doctor.Id">@doctor.Name</option>
-            }/select>
+                <option value="@doctor.DoctorId">@doctor.Name</option>
+            }
+            /select>
                 </div>
             </div>
 

@@ -8,13 +8,12 @@ namespace Hospital.Entities
     public class Department
     {
 
-       
-            [Key] // Primary key olduğunu belirtmek için
-            public int Id { get; set; }
+        [Key]
+        public Guid DeparmentId { get; set; }
 
-            public string Name { get; set; }
-        // Diğer özellikleri buraya ekleyebilirsiniz
-        public List<Doctor> Doctors { get; set; }
+        public string Name { get; set; }
+
+        public ICollection<Doctor> Doctors { get; set; }
 
     }
 }

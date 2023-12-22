@@ -8,13 +8,10 @@ namespace Hospital.Entities
     public class User
     {
 
-
-
         [Key]
 
         public Guid Id { get; set; }
-        //[StringLength(50)]
-        // string? Fullname { get; set; } = null;
+       
         [Required]
         [StringLength(30)]
         public string Username { get; set; }
@@ -29,5 +26,6 @@ namespace Hospital.Entities
         [StringLength(50)]
 
         public string Role { get; set; } = "user";
+        public ICollection<Appointment> Appointments { get; set; } // İlişkiyi temsil ediyor.
     }
 }

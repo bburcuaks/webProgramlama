@@ -13,7 +13,7 @@ namespace Hospital.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDoctorsByDepartment(int departmentId)
+        public IActionResult GetDoctorsByDepartment(Guid departmentId)
         {
             var doctors = _databaseContext.Doctors.Where(d => d.DepartmentId == departmentId).ToList();
             return Json(doctors);

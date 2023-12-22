@@ -24,6 +24,7 @@ namespace Hospital.Controllers
         [HttpGet]
         public async Task<IActionResult> MakeAppointment()
         {
+           
             // Gerekirse doktorlar, hastalar, departmanlar gibi seçenekleri ViewBag  üzerinden gönderebilirsiniz.
            ViewBag.Doctors =  await _databaseContext.Doctors.ToListAsync(); // Örnek: Veritabanından doktor listesini al
             ViewBag.Departments = await _databaseContext.Departments.ToListAsync(); // Örnek: Veritabanından departman listesini al
@@ -35,27 +36,26 @@ namespace Hospital.Controllers
 
 
         [HttpPost]
-        public IActionResult MakeAppointment(string patientName, string doctorName, string department, DateTime appointmentDate, DateTime appointmentTime)
+        public IActionResult MakeAppointment(string userName, string doctorName, string department, DateTime appointmentDate, DateTime appointmentTime)
         {
             if (ModelState.IsValid)
             {
                 // Hasta ve doktor bilgilerini al
-                var patient = _databaseContext.Patients.FirstOrDefault(p => p.Name == patientName);
+                var user = _databaseContext.Users.FirstOrDefault(p => p.Username == userName);   //Username:user.cs
                 var doctor = _databaseContext.Doctors.FirstOrDefault(d => d.Name == doctorName);
 
-                if (patient != null && doctor != null)
+                if (user != null && doctor != null)
                 {
                     // Yeni randevuyu oluştur
                     var newAppointment = new Appointment
                     {
-                        Id = Guid.NewGuid(),
-                        PatientId = patient.Id, // Patient nesnesini kullanmak yerine sadece Id'sini kullanıyoruz.
-                        DoctorId = doctor.Id,
+                        Doctor = doctor, // Doktor adı yerine doktor nesnesini kullanıyoruz
                         Department = department,
                         AppointmentDate = appointmentDate,
                         AppointmentTime = appointmentTime,
-                        Timestamp = DateTime.Now
-                        // Diğer randevu bilgilerini buraya ekleyebilirsiniz
+                        Timestamp = DateTime.Now,
+                        User = user
+
                     };
 
                     // Yeni randevuyu veritabanına ekleme
@@ -64,8 +64,13 @@ namespace Hospital.Controllers
 
                     return RedirectToAction("Index");
                 }
+                else
+                {
+                    // Kullanıcı veya doktor bulunamadı, uygun bir mesaj veya işlemi gerçekleştir
+                    ModelState.AddModelError("", "Kullanıcı veya doktor bulunamadı.");
+                }
             }
-
+          
             // Model geçerli değilse, sayfayı tekrar göster
             return View();
         }
@@ -75,41 +80,9 @@ namespace Hospital.Controllers
 
 
 
-        private IEnumerable<Department> GetDepartments()
-        {
-            var selectedDoctorNameList = _databaseContext.Doctors.ToList();
-            
-            var DepartmentsList = _databaseContext.Departments.ToList();
+       
 
-            
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            ViewBag.UserId = userId;
-
-            
-            if (selectedDoctorNameList != null)
-            {
-                ViewBag.selectedDoctorNameList = new SelectList(selectedDoctorNameList, "Id", "name");
-            }
-            
-
-            
-            if (DepartmentsList != null)
-            {
-                ViewBag.DepartmentsList = new SelectList(DepartmentsList, "DepartmentId", "DepartmentName");
-            }
-
-            return DepartmentsList;
-        }
-
-        public IActionResult ListedDepartment()
-        {
-            ViewData["Departments"] = GetDepartments();
-
-            
-
-            return View();
-        }
-
+        
 
 
 
