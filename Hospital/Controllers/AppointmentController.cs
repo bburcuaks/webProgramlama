@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace Hospital.Controllers
 {
-    [Authorize(Roles = "hasta ")]
+    [Authorize(Roles = "user")]
     public class AppointmentController : Controller
     {
       

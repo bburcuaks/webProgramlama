@@ -15,11 +15,10 @@ namespace Hospital.Entities
         //admin girişi için
 
         [Required]
-        [StringLength(30)]
         public string Username { get; set; }
 
         [Required]
-        [StringLength(30)]
+        [StringLength(100)]
         public string Password { get; set; }
         public bool Locked { get; set; }
 
