@@ -19,21 +19,34 @@
             <div class="form-group">
                 <label class="form-label small">Hasta Adı</label>
                 <div class="input-group mb-3">
-                    <input name="patientName" type="text" class="form-control" placeholder="Hasta Adınız" value="@ViewData["PatientName"]" />
+                    <input name="userName" type="text" class="form-control" placeholder="Hasta Adınız" />
                 </div>
             </div>
 
-            <div class="form-group">
+
+           
+
+           <div class="form-group">
                 <label class="form-label small">Departman</label>
                 <div class="input-group mb-3">
                     <select id="departmentSelect" name="department" class="form-control">
-                    @foreach (var department in (IEnumerable<Department>)ViewData["Departments"])
-                        {
-                            <option value="@department.DeparmentId">@department.Name</option>
-                        }                  
+                         @if ( ViewBag.PoliclinicList != null)
+            {
+                foreach (var department in  ViewBag.PoliclinicList)
+                {
+                    <option value="@department.Value">@department.Text</option>
+                }
+            }
+            else
+            {
+                <option value="">Departman bulunamadı</option>
+            }    
                         </select>
                 </div>
             </div>
+ 
+
+           
     
 
 
@@ -41,13 +54,16 @@
                 <label class="form-label small">Doktor Adı</label>
                 <div class="input-group mb-3">
                     <select id="doctorSelect" name="doctorName" class="form-control"><
-                  @foreach (var doctor in (IEnumerable<Doctor>)ViewData["Doctors"])
+                  @foreach (var doctor in ViewBag.Doctors)
             {
                 <option value="@doctor.DoctorId">@doctor.Name</option>
             }
-            /select>
+            </select>
                 </div>
             </div>
+
+
+
 
             <div class="form-group">
                 <label class="form-label small">Randevu Tarihi</label>

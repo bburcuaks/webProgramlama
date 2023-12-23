@@ -32,8 +32,8 @@
 @if (User.Identity.IsAuthenticated)
 {
     @if (User.IsInRole("admin"))
-{
- <li class="nav-item dropdown">
+     {
+     <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         İşlemler
     </a>
@@ -44,16 +44,16 @@
         <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="EditAppointment">Randevu Düzenle</a></li>
         <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ListUsers">Kullanıcıları Listele</a></li>
     </ul>
-</li>
+     </li>
 
-}
+      }
 
-<li class="nav-item ms-auto">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">@User.FindFirst("Username").Value</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış Yap</a>
-</li>
+       <li class="nav-item ms-auto">
+       <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">@User.FindFirst("Username").Value</a>
+       </li>
+       <li class="nav-item">
+       <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış Yap</a>
+       </li>
 
 
 
@@ -64,20 +64,21 @@
         </li>
     }
 }
-else
-{
+     else
+     {
     <li class="nav-item ms-auto">
         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Giriş Yap</a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Kayıt Ol</a>
     </li>
+
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="AddAdmin">Admin Ekkle</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="AddAdmin">Admin Ekle</a>
     </li>
 
     
-}
+     }
 
 <!-- ... Diğer HTML etiketleri ... -->
 

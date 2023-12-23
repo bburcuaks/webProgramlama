@@ -29,10 +29,9 @@ namespace Hospital.Controllers
            ViewBag.Doctors =  await _databaseContext.Doctors.ToListAsync(); // Örnek: Veritabanından doktor listesini al
             ViewBag.Departments = await _databaseContext.Departments.ToListAsync(); // Örnek: Veritabanından departman listesini al
 
+            departmanListele();
             return View();
         }
-
-
 
 
         [HttpPost]
@@ -41,8 +40,16 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 // Hasta ve doktor bilgilerini al
-                var user = _databaseContext.Users.FirstOrDefault(p => p.Username == userName);   //Username:user.cs
-                var doctor = _databaseContext.Doctors.FirstOrDefault(d => d.Name == doctorName);
+               var user = _databaseContext.Users.Where(u => u.Username == userName).FirstOrDefault();
+
+
+
+                var doctor = _databaseContext.Doctors.Where(d => d.Username == doctorName).FirstOrDefault();
+
+
+                
+
+
 
                 if (user != null && doctor != null)
                 {
@@ -60,31 +67,24 @@ namespace Hospital.Controllers
 
                     // Yeni randevuyu veritabanına ekleme
                     _databaseContext.Appointments.Add(newAppointment);
-                    _databaseContext.SaveChanges();
+                    int  affectedRowCount=_databaseContext.SaveChanges();
+                    if(affectedRowCount==0)
+                    {
+                        ModelState.AddModelError("", "Randevu Eklenemez.");
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
 
-                    return RedirectToAction("Index");
                 }
-                else
-                {
-                    // Kullanıcı veya doktor bulunamadı, uygun bir mesaj veya işlemi gerçekleştir
-                    ModelState.AddModelError("", "Kullanıcı veya doktor bulunamadı.");
-                }
+                departmanListele();
             }
-          
+            //metod yaz
+            departmanListele();
             // Model geçerli değilse, sayfayı tekrar göster
             return View();
         }
-
-
-
-
-
-
-       
-
-        
-
-
 
 
 
@@ -96,6 +96,21 @@ namespace Hospital.Controllers
             return View(appointments);
         }
 
+        public void departmanListele()
+        {
+            var selectedDoctorNameList = _databaseContext.Doctors.ToList();
+            var deparmantlist = _databaseContext.Departments.ToList();
+
+            // View'e verileri gönder
+            if (selectedDoctorNameList != null)
+            {
+                ViewBag.selectedDoctorNameList = new SelectList(selectedDoctorNameList, "DoctorId", "Name");
+            }
+            if (deparmantlist != null)
+            {
+                ViewBag.PoliclinicList = new SelectList(deparmantlist, "DeparmentId", "Name");
+            }
+        }
 
 
 

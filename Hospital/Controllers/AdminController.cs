@@ -76,7 +76,17 @@ namespace Hospital.Controllers
             return View(doctors);
         }
 
-        
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _databaseContext.Users.ToList();
+            return View(users);
+        }
+
+
+
+
 
 
     }

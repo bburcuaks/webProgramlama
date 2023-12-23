@@ -16,6 +16,9 @@ namespace Hospital.Entities
         {
 
 
+
+
+
             //doctor-appointment       
                    modelBuilder.Entity<Doctor>()
                  .HasMany(d => d.Appointments) //Bir doktorun birden çok randevusu olabilir.

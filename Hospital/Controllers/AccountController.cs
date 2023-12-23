@@ -134,6 +134,7 @@ namespace Hospital.Controllers
                 {
                     Username = model.Username,
                     Password = hashedPassword
+                    
                 };
                 _databaseContext.Users.Add(user);
                 int affectedRowCount = _databaseContext.SaveChanges();
@@ -193,6 +194,9 @@ namespace Hospital.Controllers
             return View(model);
         }
 
+
+
+       
         public IActionResult Profile()
         {
             ProfileInfoLoader();
