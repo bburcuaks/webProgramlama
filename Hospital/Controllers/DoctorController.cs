@@ -1,4 +1,17 @@
 ﻿
+/*
+
+
+
+
+
+
+
+
+
+
+
+
 
 using Hospital.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -24,3 +37,4 @@ namespace Hospital.Controllers
 }
 
 
+*/

@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Security.Claims;
+
 namespace Hospital.Controllers
 {
-    [Authorize(Roles = "admin")]
+  
     public class AdminController : Controller
     {
         private readonly DatabaseContext _databaseContext;
@@ -83,7 +85,31 @@ namespace Hospital.Controllers
             var users = _databaseContext.Users.ToList();
             return View(users);
         }
+        [Authorize(Roles = "user")]
+        [HttpGet]
+        public IActionResult ListAppointments()
+        {
+            var appointments = _databaseContext.Appointments.ToList();
+            return View(appointments);
+        }
 
+        [Authorize(Roles = "user")]       
+        [HttpGet]
+        public IActionResult DeleteAppointments()            //bütün randevuları sildi.
+        {
+            // Kullanıcının Id'sini al
+            Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            // Kullanıcının randevularını bul
+            var userAppointments = _databaseContext.Appointments.Where(a => a.Id == userId).ToList();
+
+            // Kullanıcının randevularını veritabanından sil
+            _databaseContext.Appointments.RemoveRange(userAppointments);
+            _databaseContext.SaveChanges();
+
+            // Silme işlemi tamamlandıktan sonra bir sayfaya yönlendir
+            return RedirectToAction("Index");
+
+        }
 
 
 

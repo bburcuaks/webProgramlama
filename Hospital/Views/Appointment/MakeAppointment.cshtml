@@ -1,110 +1,72 @@
-﻿@using Hospital.Entities
-@{
-    ViewData["Title"] = "Randevu Ekranı";
+﻿@model Hospital.Models.MakeAppointmentViewModel
+
+<h2>Randevu Al</h2>
+<br />
+
+@if (ViewData["result"] != null)
+{
+    <div class="alert alert-success">@ViewData["result"]</div>
 }
 
-<div class="row">
-    <div class="col-4 offset-4">
-        <h1 class="display-10 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+<br />
+<br />
+<br />
+
+<form asp-controller="Appointment" asp-action="MakeAppointment" method="post" id="appointmentForm">
+    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+    <div class="form-group">
+        <label asp-for="Department"></label>
+        <select asp-for="Department" asp-items="ViewBag.DepartmentList" class="form-control" id="departmentDropdown"></select>
+        <span asp-validation-for="Department" class="text-danger"></span>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-4">
-        <div class="mb-4">
-            <div asp-validation-summary="All" class="text-danger small"></div>
-        </div>
+    <div class="form-group">
+        <label asp-for="DoctorId"></label>
+        <select asp-for="DoctorId" class="form-control" id="doctorDropdown"></select>
+        <span asp-validation-for="DoctorId" class="text-danger"></span>
+    </div>
 
-        <form method="post" asp-action="MakeAppointment">
-            <div class="form-group">
-                <label class="form-label small">Hasta Adı</label>
-                <div class="input-group mb-3">
-                    <input name="userName" type="text" class="form-control" placeholder="Hasta Adınız" />
-                </div>
-            </div>
+    <div class="form-group">
+        <label asp-for="AppointmentDate"></label>
+        <input asp-for="AppointmentDate" type="date" class="form-control" />
+        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+    </div>
 
+    <div class="form-group">
+        <label asp-for="AppointmentTime"></label>
+        <input asp-for="AppointmentTime" type="time" class="form-control" />
+        <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+    </div>
 
-           
+    <br />
+    <br />
+    <br />
 
-           <div class="form-group">
-                <label class="form-label small">Departman</label>
-                <div class="input-group mb-3">
-                    <select id="departmentSelect" name="department" class="form-control">
-                         @if ( ViewBag.PoliclinicList != null)
-            {
-                foreach (var department in  ViewBag.PoliclinicList)
-                {
-                    <option value="@department.Value">@department.Text</option>
+    <button type="submit" class="btn btn-primary">Randevu Al</button>
+</form>
+
+@section Scripts {
+    <script>
+        // Departman değiştiğinde doktorları güncelle
+        $('#departmentDropdown').change(function () {
+            var departmentId = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetDoctorsByDepartment", "Appointment")',
+                type: 'POST',
+                data: { departmentId: departmentId },
+                success: function (data) {
+                    // Doktorları güncelle
+                    var doctorDropdown = $('#doctorDropdown');
+                    doctorDropdown.empty();
+                    $.each(data, function (index, item) {
+                        doctorDropdown.append($('<option>', {
+                            value: item.doctorId,
+                            text: item.name
+                        }));
+                    });
                 }
-            }
-            else
-            {
-                <option value="">Departman bulunamadı</option>
-            }    
-                        </select>
-                </div>
-            </div>
- 
-
-           
-    
-
-
-            <div class="form-group">
-                <label class="form-label small">Doktor Adı</label>
-                <div class="input-group mb-3">
-                    <select id="doctorSelect" name="doctorName" class="form-control"><
-                  @foreach (var doctor in ViewBag.Doctors)
-            {
-                <option value="@doctor.DoctorId">@doctor.Name</option>
-            }
-            </select>
-                </div>
-            </div>
-
-
-
-
-            <div class="form-group">
-                <label class="form-label small">Randevu Tarihi</label>
-                <div class="input-group mb-3">
-                    <input name="appointmentDate" type="date" class="form-control" value="@ViewData["AppointmentDate"]" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label small">Randevu Saati</label>
-                <div class="input-group mb-3">
-                    <input name="appointmentTime" type="time" class="form-control" value="@ViewData["AppointmentTime"]" />
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-secondary">Randevu Al</button>
-        </form>
-    </div>
-</div>
-
-<script>
-    // Departman seçimi değiştiğinde tetiklenen fonksiyon
-    document.getElementById('departmentSelect').addEventListener('change', function () {
-        var departmentId = this.value; // Seçilen departman ID'si
-
-        // Ajax isteği yaparak doktorları getir
-        fetch('/Doctor/GetDoctorsByDepartment?departmentId=' + departmentId)
-            .then(response => response.json())
-            .then(data => {
-                // Doktorları temizle
-                var doctorSelect = document.getElementById('doctorSelect');
-                doctorSelect.innerHTML = '';
-
-                // Yeni doktorları ekle
-                data.forEach(doctor => {
-                    var option = document.createElement('option');
-                    option.value = doctor.id;
-                    option.text = doctor.name + ' ' + doctor.surname;
-                    doctorSelect.add(option);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    });
-</script>
+            });
+        });
+    </script>
+}
