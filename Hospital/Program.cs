@@ -1,6 +1,10 @@
 using Hospital.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Globalization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +26,22 @@ builder.Services
         opts.LogoutPath = "/Account/Logout";
         opts.AccessDeniedPath = "/Home/AccessDenied";
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

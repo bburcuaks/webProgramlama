@@ -45,7 +45,7 @@ namespace Hospital.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "doctor")]
-        public IActionResult DeleteAppointments(Guid appointmentId)
+        public IActionResult DeleteAppointment(Guid appointmentId)
         {
             // Kullanıcının Id'sini al
             Guid doctorId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));

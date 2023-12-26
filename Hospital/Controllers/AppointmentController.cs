@@ -28,6 +28,9 @@ namespace Hospital.Controllers
 
             ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
             ViewBag.DepartmentList = new SelectList(_databaseContext.Departments, "DeparmentId", "Name"); ;
+            // Uygun randevu saatlerini bir değişkende sakla
+            ViewBag.AvailableAppointmentTimes = GetAvailableAppointmentTimes();
+
             return View();
         }
 
@@ -50,6 +53,9 @@ namespace Hospital.Controllers
 
 
 
+
+
+
                 // Randevu alma işlemleri...
 
                 var user = _databaseContext.Users.FirstOrDefault(u => u.Id == model.UserId);
@@ -68,7 +74,7 @@ namespace Hospital.Controllers
                 _databaseContext.Appointments.Add(appointment);
                 _databaseContext.SaveChanges();
 
-                return RedirectToAction("ListAppointments", "Doctor");
+                return RedirectToAction("ListAppointments", "Admin");
             }
 
 
@@ -76,6 +82,10 @@ namespace Hospital.Controllers
 
             ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
             ViewBag.DepartmentList = new SelectList(_databaseContext.Departments, "DeparmentId", "Name");
+            // Uygun randevu saatlerini bir değişkende sakla
+            ViewBag.AvailableAppointmentTimes = GetAvailableAppointmentTimes();
+
+
 
             return View(model);
 
@@ -96,6 +106,23 @@ namespace Hospital.Controllers
             
         }
 
+        private List<TimeSpan> GetAvailableAppointmentTimes()
+        {
+            int intervalInMinutes = 45;
+            DateTime baseTime = DateTime.Today.AddHours(10); // Başlangıç saati, örneğin 09:00
+
+            List<TimeSpan> availableTimes = new List<TimeSpan>();
+
+            while (baseTime.Hour < 18) // Randevu alınabilecek son saat, örneğin 17:00
+            {
+                availableTimes.Add(baseTime.TimeOfDay);
+                baseTime = baseTime.AddMinutes(intervalInMinutes);
+            }
+
+            return availableTimes;
+
+
+        }
 
 
         [AllowAnonymous]

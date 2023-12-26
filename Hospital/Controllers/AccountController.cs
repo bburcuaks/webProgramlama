@@ -231,8 +231,46 @@ namespace Hospital.Controllers
         private void ProfileInfoLoader()
         {
             Guid userid = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            User user = _databaseContext.Users.SingleOrDefault(x => x.Id == userid);
-            ViewData["Username"] = user.Username;
+            //User user = _databaseContext.Users.SingleOrDefault(x => x.Id == userid);
+           
+            
+            if (User.IsInRole("doctor"))
+            {
+                // Doktor ise ilgili bilgileri çek
+                Doctor doctor = _databaseContext.Doctors.SingleOrDefault(x => x.DoctorId == userid);
+                if (doctor != null)
+                {
+                    ViewData["Username"] = doctor.Username;
+                    // Diğer doktor özelliklerini de ViewData'ya ekleyebilirsiniz.
+                }
+            }
+
+            else if (User.IsInRole("admin"))
+            {
+                // Admin ise ilgili bilgileri çek
+                Admin admin = _databaseContext.Admins.SingleOrDefault(x => x.AdminId == userid);
+                if (admin != null)
+                {
+                    ViewData["Username"] = admin.Username;
+                    // Diğer admin özelliklerini de ViewData'ya ekleyebilirsiniz.
+                }
+            }
+
+            else if (User.IsInRole("user"))
+            {
+                // User ise ilgili bilgileri çek
+                User user = _databaseContext.Users.SingleOrDefault(x => x.Id == userid);
+                if (user != null)
+                {
+                    ViewData["Username"] = user.Username;
+                    // Diğer user özelliklerini de ViewData'ya ekleyebilirsiniz.
+                }
+            }
+
+
+
+
+
         }
         
         [HttpPost]

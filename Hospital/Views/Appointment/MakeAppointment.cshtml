@@ -33,11 +33,25 @@
         <span asp-validation-for="AppointmentDate" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="AppointmentTime"></label>
-        <input asp-for="AppointmentTime" type="time" class="form-control" />
-        <span asp-validation-for="AppointmentTime" class="text-danger"></span>
-    </div>
+   <div class="form-group">
+     <label asp-for="AppointmentTime" class="control-label"></label>
+     <div>
+         @if (ViewBag.AvailableAppointmentTimes != null)
+         {
+             <select asp-for="AppointmentTime" class="form-control">
+                 @foreach (var time in ViewBag.AvailableAppointmentTimes)
+                 {
+                     <option value="@time">@time.ToString("hh\\:mm")</option>
+                 }
+             </select>
+         }
+         else
+         {
+             <span class="text-danger">Uygun randevu saatleri bulunamadı.</span>
+         }
+         <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+     </div>
+ </div>
 
     <br />
     <br />
