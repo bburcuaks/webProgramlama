@@ -6,15 +6,15 @@ namespace Hospital.Models
     {
 
 
-        [Required(ErrorMessage = "Name is required.")]
+        [Required(ErrorMessage = "İsim zorunlu.")]
         [MinLength(0, ErrorMessage = "İsim giriniz.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Surname is required.")]
+        [Required(ErrorMessage = "Soyad zorunlu.")]
         [MinLength(0, ErrorMessage = "Soyisim giriniz.")]
         public string Surname { get; set; }
-        [Required(ErrorMessage = "Email zorunlu!")]
-        [StringLength(30, ErrorMessage = "Email en fazla 30 karakter olabilir.")]
+        [Required(ErrorMessage = "Kullanıcı adı zorunlu!")]
+        [StringLength(30, ErrorMessage = "Kullanıcı adı en fazla 30 karakter olabilir.")]
         public string Username { get; set; }
         
 

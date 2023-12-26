@@ -1,43 +1,48 @@
-﻿<!-- Views/Admin/AddDoctor.cshtml -->
+﻿@model Hospital.Models.AddDoctorViewModel
 
-@model Hospital.Models.AddDoctorViewModel
+<h2>Add Doctor</h2>
 
 <form method="post" asp-action="AddDoctor">
     <div class="form-group">
-        <label for="name">Doktor Adı</label>
+        <label for="Name">İsim</label>
         <input type="text" asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="surname">Doktor Soyadı</label>
+        <label for="Surname">Soyad</label>
         <input type="text" asp-for="Surname" class="form-control" />
         <span asp-validation-for="Surname" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="username">Kullanıcı Adı</label>
+        <label for="Username">Kullanıcı Adı</label>
         <input type="text" asp-for="Username" class="form-control" />
         <span asp-validation-for="Username" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="password">Şifre</label>
+        <label for="Password">Şifre</label>
         <input type="password" asp-for="Password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
-   <div class="form-group">
-    <label for="departmentId">Departman</label>
-    <select asp-for="DepartmentId" asp-items="@(new SelectList(ViewBag.Departments, "DeparmentId", "Name"))" class="form-control">
-        <option value="">Departman Seç</option>
-    </select>
-    <span asp-validation-for="DepartmentId" class="text-danger"></span>
-</div>
-
+    <div class="form-group">
+        <label for="RePassword">Şifre</label>
+        <input type="password" asp-for="RePassword" class="form-control" />
+        <span asp-validation-for="RePassword" class="text-danger"></span>
+    </div>
 
     <div class="form-group">
-        <label for="calismaGunu">Çalışma Günü</label>
+        <label for="DeparmentId">Department</label>
+        <select asp-for="DeparmentId" asp-items="@(new SelectList(ViewBag.Departments, "DeparmentId", "Name"))" class="form-control">
+            <option value="">Departman Seçiniz</option>
+        </select>
+        <span asp-validation-for="DeparmentId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="CalismaGunu">Çalışma Günü</label>
         <select asp-for="CalismaGunu" class="form-control" multiple>
             <option value="Monday">Pazartesi</option>
             <option value="Tuesday">Salı</option>
@@ -51,16 +56,16 @@
     </div>
 
     <div class="form-group">
-        <label for="baslangicSaati">Başlangıç Saati</label>
+        <label for="BaslangicSaati">Başlangç Saati</label>
         <input type="time" asp-for="BaslangicSaati" class="form-control" />
         <span asp-validation-for="BaslangicSaati" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="bitisSaati">Bitiş Saati</label>
+        <label for="BitisSaati">Bitiş Saati</label>
         <input type="time" asp-for="BitisSaati" class="form-control" />
         <span asp-validation-for="BitisSaati" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Doktor Ekle</button>
+    <button type="submit" class="btn btn-primary">Add Doctor</button>
 </form>

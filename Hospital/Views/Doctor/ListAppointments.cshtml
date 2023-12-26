@@ -1,0 +1,33 @@
+﻿@using Hospital.Entities
+@model List<Appointment>
+
+<h2>Doktorun Randevuları</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Randevu Tarihi</th>
+            <th>Randevu Saati</th>
+            <th>Hasta Id</th>
+            
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.AppointmentDate.ToShortDateString()</td>
+                <td>@appointment.AppointmentTime.ToString("hh:mm tt")</td>
+                <td>@appointment.Id</td>
+              
+                <td>
+                    <form asp-controller="Doctor" asp-action="DeleteAppointment" method="post">
+                        <input type="hidden" name="appointmentId" value="@appointment.RandevuId" />
+                        <button type="submit" class="btn btn-danger">Randevuyu İptal Et</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

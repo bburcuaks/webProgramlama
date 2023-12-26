@@ -36,10 +36,9 @@ namespace Hospital.Controllers
             {
                 string hashedPassword = DoMD5HashedString(model.Password);
 
-                User user = _databaseContext.Users.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
-                && x.Password == hashedPassword);
-                Admin admin = _databaseContext.Admins.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
-                && x.Password == hashedPassword);
+                User user = _databaseContext.Users.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower() && x.Password == hashedPassword);
+                Admin admin = _databaseContext.Admins.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower() && x.Password == hashedPassword);
+                Doctor doctor = _databaseContext.Doctors.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower() && x.Password == hashedPassword);
 
                 if (user != null)
                 {
@@ -87,6 +86,32 @@ namespace Hospital.Controllers
 
                     return RedirectToAction("Index", "Admin");
                 }
+
+
+                if (user == null && admin == null && doctor!=null)
+                {
+                    if (doctor.Locked)
+                    {
+                        ModelState.AddModelError(nameof(model.Username), "Doctor is locked.");
+                        return View(model);
+                    }
+
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, doctor.DoctorId.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Name, doctor.Name ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Name, doctor.Surname ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Role, doctor.Role));
+                    claims.Add(new Claim("Username", doctor.Username));
+
+                    ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    return RedirectToAction("Index", "Doctor");
+                }
+
                 else
                 {
                     ModelState.AddModelError("", "Username or password is incorrect.");

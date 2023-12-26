@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hospital.Models
 {
@@ -18,8 +19,11 @@ namespace Hospital.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Compare(nameof(Password))]
+        public string RePassword { get; set; }
+
         [Required(ErrorMessage = "Lütfen bir departman seçin.")]
-        public Guid DepartmentId { get; set; }
+        public Guid DeparmentId { get; set; }
 
         [Required(ErrorMessage = "Lütfen çalışma gününü seçin.")]
         public DayOfWeek CalismaGunu { get; set; }
@@ -29,5 +33,8 @@ namespace Hospital.Models
 
         [Required(ErrorMessage = "Lütfen bitiş saati seçin.")]
         public TimeSpan BitisSaati { get; set; }
+
+
+   
     }
 }

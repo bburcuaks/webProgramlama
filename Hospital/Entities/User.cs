@@ -16,7 +16,7 @@ namespace Hospital.Entities
         [StringLength(30)]
         public string Username { get; set; }
         [Required]
-        [StringLength(100)]
+        [MinLength(3)]
         public string Password { get; set; }
         public bool Locked { get; set; }
 

@@ -65,9 +65,18 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAppointments">Randevularım</a>
         </li>
+       
+    }
+
+
+
+       @if (User.IsInRole("doctor"))
+    {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DeleteAppointments">Randevu Sil</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="ListAppointments">Randevularım</a>
         </li>
+      
+       
     }
 }
      else

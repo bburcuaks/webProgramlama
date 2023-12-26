@@ -68,7 +68,7 @@ namespace Hospital.Controllers
                 _databaseContext.Appointments.Add(appointment);
                 _databaseContext.SaveChanges();
 
-                return RedirectToAction("ListAppointments", "Admin");
+                return RedirectToAction("ListAppointments", "Doctor");
             }
 
 
@@ -89,7 +89,7 @@ namespace Hospital.Controllers
             return _databaseContext.Appointments.Any(appointment =>
                 appointment.DoctorId == doctorId &&
                 appointment.Department==Departman&&
-                appointment.RandevuId == randevuId&&
+                appointment.RandevuId != randevuId&&
                 appointment.AppointmentDate.Date == randevuGunu.Date && // Tarih kıyaslaması sadece gün, ay, yıl olarak yapılır
                 appointment.AppointmentTime == randevuSaati);
                
@@ -119,6 +119,7 @@ namespace Hospital.Controllers
 
        
         [HttpPost]
+        [Authorize(Roles = "user")]
         public IActionResult DeleteAppointments(Guid appointmentId)
         {
             // Kullanıcının Id'sini al
@@ -134,7 +135,7 @@ namespace Hospital.Controllers
             _databaseContext.SaveChanges();
 
             // Silme işlemi tamamlandıktan sonra bir sayfaya yönlendir
-            return RedirectToAction("ListAppointment","Admin");
+            return RedirectToAction("ListAppointments","Admin");
         }
 
 
@@ -150,93 +151,14 @@ namespace Hospital.Controllers
 
 
 
-        // Yeni randevu oluşturma sayfası
-        public IActionResult Create()
-        {
-            // Gerekirse doktorlar, hastalar, kullanıcılar gibi seçenekleri ViewBag veya ViewData üzerinden gönderebilirsiniz.
-            return View();
-        }
+    
 
-        // Yeni randevu oluşturma işlemi
-        [HttpPost]
-        public IActionResult Create(Appointment appointment)
-        {
-            if (ModelState.IsValid)
-            {
-                // Yeni randevuyu veritabanına ekleme
-                _databaseContext.Appointments.Add(appointment);
-                _databaseContext.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            // Eğer model geçerli değilse, tekrar create sayfasını göster
-            return View(appointment);
-        }
+        
 
-        // Randevu detayları
-        public IActionResult Details(Guid id)
-        {
+       
 
 
-
-            var appointment = _databaseContext.Appointments.FirstOrDefault(a => a.Id == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-            return View(appointment);
-        }
-
-        // Randevu düzenleme sayfası
-        public IActionResult Edit(Guid id)
-        {
-            var appointment = _databaseContext.Appointments.FirstOrDefault(a => a.Id == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-            return View(appointment);
-        }
-
-
-        // Randevu düzenleme işlemi
-        [HttpPost]
-        public IActionResult Edit(Appointment appointment)
-        {
-            if (ModelState.IsValid)
-            {
-                // Randevuyu güncelleme
-                _databaseContext.Appointments.Update(appointment);
-                _databaseContext.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            // Eğer model geçerli değilse, tekrar edit sayfasını göster
-            return View(appointment);
-        }
-
-
-        // Randevu silme işlemi
-        public IActionResult Delete(Guid id)
-        {
-            var appointment = _databaseContext.Appointments.FirstOrDefault(a => a.Id == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-            return View(appointment);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(Guid id)
-        {
-            var appointment = _databaseContext.Appointments.FirstOrDefault(a => a.Id == id);
-            if (appointment != null)
-            {
-                // Randevuyu veritabanından silme
-                _databaseContext.Appointments.Remove(appointment);
-                _databaseContext.SaveChanges();
-            }
-            return RedirectToAction("Index");
-        }
+       
     }
 
 

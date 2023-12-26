@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Hospital.Migrations
 {
     /// <inheritdoc />
-    public partial class aa : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,7 +46,7 @@ namespace Hospital.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Locked = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
@@ -64,7 +64,7 @@ namespace Hospital.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Locked = table.Column<bool>(type: "bit", nullable: false),
                     DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CalismaGunu = table.Column<int>(type: "int", nullable: false),
