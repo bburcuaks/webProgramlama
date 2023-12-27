@@ -183,11 +183,52 @@ namespace Hospital.Controllers
 
 
 
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public IActionResult DeleteDoctor(Guid DoctorId)
+        {
+            
+
+            // Belirli doktoru bul
+            var doctor = _databaseContext.Doctors.Find(DoctorId);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            // Doktorun randevularını bul
+            var doctorAppointments = _databaseContext.Appointments
+                .Where(a => a.DoctorId == DoctorId)
+                .ToList();
+
+            // Doktoru ve randevularını veritabanından sil
+            _databaseContext.Doctors.Remove(doctor);
+            _databaseContext.Appointments.RemoveRange(doctorAppointments);
+
+            _databaseContext.SaveChanges();
+
+            // Silme işlemi tamamlandıktan sonra bir sayfaya yönlendir
+            return RedirectToAction("ListDoctors", "Admin");
+        }
 
 
 
+        [HttpPost]
+        public IActionResult DeleteUser(Guid userId)
+        {
+            // Belirli kullanıcıyı bul
+            var user = _databaseContext.Users.Find(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
+            // Kullanıcıyı ve randevularını veritabanından sil
+            _databaseContext.Users.Remove(user);
 
+            // Silme işlemi tamamlandıktan sonra bir sayfaya yönlendir
+            return RedirectToAction("ListUsers", "Admin");
+        }
 
 
 

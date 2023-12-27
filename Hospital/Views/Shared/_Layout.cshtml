@@ -33,19 +33,16 @@
 {
     @if (User.IsInRole("admin"))
      {
-     <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        İşlemler
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="adminMenu">
-        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Index</a></li>
-        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AddDoctor">Doktor Ekle</a></li>
-        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ListDoctors">Doktorları Listele</a></li>
-        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="EditAppointment">Randevu Düzenle</a></li>
-        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ListUsers">Kullanıcıları Listele</a></li>
-    </ul>
-     </li>
-
+    <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AddDoctor">Doktor Ekle</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListDoctors">Doktorları Listele</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListUsers">Kullanıcıları Listele</a>
+        </li>
+        
       }
 
        <li class="nav-item ms-auto">

@@ -28,6 +28,14 @@
                 <td>@doctor.CalismaGunu</td>
                 <td>@doctor.BaslangicSaati</td>
                 <td>@doctor.BitisSaati</td>
+
+                <td>
+                    <form asp-controller="Admin" asp-action="DeleteDoctor" method="post">
+                        <input type="hidden" name="DoctorId" value="@doctor.DoctorId" />
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+
             </tr>
         }
     </tbody>

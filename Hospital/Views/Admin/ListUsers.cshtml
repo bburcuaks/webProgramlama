@@ -24,6 +24,14 @@
                 <td>@user.Locked</td>
                 <td>@user.CreatedAt</td>
                 <td>@user.Role</td>
+
+
+                <td>
+                    <form asp-controller="Admin" asp-action="DeleteUser" method="post">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
