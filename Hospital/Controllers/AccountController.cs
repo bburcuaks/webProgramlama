@@ -109,7 +109,7 @@ namespace Hospital.Controllers
 
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                    return RedirectToAction("Index", "Doctor");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 else
