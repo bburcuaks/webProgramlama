@@ -212,7 +212,7 @@ namespace Hospital.Controllers
                 else
                 {
                     // Admin eklendikten sonra bir işlem yapabilirsiniz (örneğin, admin listesine yönlendirme yapabilirsiniz)
-                    return RedirectToAction("Index", "Admin"); // Bu, Admin kontrolöründeki Index action'ına yönlendirir. Lütfen uygun bir action ve kontrolör seçin.
+                    return RedirectToAction("ListAdmins", "Admin"); // Bu, Admin kontrolöründeki Index action'ına yönlendirir. Lütfen uygun bir action ve kontrolör seçin.
                 }
             }
 

@@ -112,12 +112,39 @@ namespace Hospital.Controllers
             var users = _databaseContext.Users.ToList();
             return View(users);
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public IActionResult ListAdmins()
+        {
+            var users = _databaseContext.Admins.ToList();
+            return View(users);
+        }
+
         [Authorize(Roles = "user")]
         [HttpGet]
         public IActionResult ListAppointments()
         {
             var appointments = _databaseContext.Appointments.ToList();
             return View(appointments);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAdmins(Guid adminId)
+        {
+            // AdminId'ye göre Admin'i bul
+            var adminToDelete = _databaseContext.Admins.Find(adminId);
+
+            if (adminToDelete == null)
+            {
+                return NotFound(); // Admin bulunamadıysa 404 Not Found döndür
+            }
+
+            // Admini sil
+            _databaseContext.Admins.Remove(adminToDelete);
+            _databaseContext.SaveChanges();
+
+            return RedirectToAction("ListAdmins"); // Silme işlemi başarılıysa ListAdmins sayfasına yönlendir
         }
 
 
