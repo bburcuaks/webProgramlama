@@ -211,8 +211,8 @@ namespace Hospital.Controllers
                 }
                 else
                 {
-                    // Admin eklendikten sonra bir işlem yapabilirsiniz (örneğin, admin listesine yönlendirme yapabilirsiniz)
-                    return RedirectToAction("ListAdmins", "Admin"); // Bu, Admin kontrolöründeki Index action'ına yönlendirir. Lütfen uygun bir action ve kontrolör seçin.
+                    
+                    return RedirectToAction("ListAdmins", "Admin"); 
                 }
             }
 
@@ -241,7 +241,7 @@ namespace Hospital.Controllers
                 if (doctor != null)
                 {
                     ViewData["Username"] = doctor.Username;
-                    // Diğer doktor özelliklerini de ViewData'ya ekleyebilirsiniz.
+                   
                 }
             }
 
@@ -252,7 +252,7 @@ namespace Hospital.Controllers
                 if (admin != null)
                 {
                     ViewData["Username"] = admin.Username;
-                    // Diğer admin özelliklerini de ViewData'ya ekleyebilirsiniz.
+                   
                 }
             }
 
@@ -263,7 +263,7 @@ namespace Hospital.Controllers
                 if (user != null)
                 {
                     ViewData["Username"] = user.Username;
-                    // Diğer user özelliklerini de ViewData'ya ekleyebilirsiniz.
+                  
                 }
             }
 
